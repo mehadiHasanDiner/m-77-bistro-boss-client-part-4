@@ -3,7 +3,7 @@ import Cover from "../../../Shared/Cover/Cover";
 import MenuItem from "../../../Shared/MenuItem/MenuItem";
 
 const MenuCategory = ({ items, title, img }) => {
-  console.log(title);
+  // console.log(title);
   return (
     <div className="pt-8">
       {title && <Cover img={img} title={title}></Cover>}

@@ -1,10 +1,13 @@
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
 import { FaWallet } from "react-icons/fa6";
 import { FaCalendarAlt, FaHome } from "react-icons/fa";
-import { BsMenuApp } from "react-icons/bs";
+import { BsCart3, BsMenuApp } from "react-icons/bs";
+import { IoFastFoodOutline } from "react-icons/io5";
+import useCart from "../hooks/useCart";
 
 const Dashboard = () => {
+  const [cart] = useCart();
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -13,7 +16,7 @@ const Dashboard = () => {
         <Outlet></Outlet>
         <label
           htmlFor="my-drawer-2"
-          className="btn btn-primary drawer-button lg:hidden"
+          className="btn btn-primary drawer-button lg:hidden absolute left-0 top-0"
         >
           Open drawer
         </label>
@@ -24,48 +27,58 @@ const Dashboard = () => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+        <ul className="menu p-4 w-80 min-h-full bg-[#D1A054] text-base-content">
           {/* Sidebar content here */}
           <li>
-            <Link>
+            <NavLink to="/dashboard/myHome">
               <FaHome />
               User Home
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link>
+            <NavLink to="/dashboard/myReservation">
               <FaCalendarAlt />
               Reservations
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link>
+            <NavLink to="/dashboard/history">
               <FaWallet />
               Payment History
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link>
+            <NavLink to="/dashboard/myCart">
               <FaCartPlus />
               My Cart
-            </Link>
+              <span className="indicator">
+                <BsCart3 />
+                <span className="badge badge-sm badge-secondary indicator-item">
+                  {cart?.length || 0}
+                </span>
+              </span>
+            </NavLink>
           </li>
           <div className="divider"></div>
           <li>
-            <Link to="/">
+            <NavLink to="/">
               <FaHome />
               Home
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/menu">
+            <NavLink to="/menu">
               {" "}
               <BsMenuApp />
-              Menu
-            </Link>
+              Our Menu
+            </NavLink>
           </li>
           <li>
-            <Link> </Link>
+            <NavLink to="/order/salad">
+              {" "}
+              <IoFastFoodOutline />
+              Order Food
+            </NavLink>
           </li>
           <li></li>
         </ul>

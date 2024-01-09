@@ -89,10 +89,12 @@ const Navbar = () => {
                 className="btn btn-ghost btn-circle btn-lg pr-3 "
               >
                 <div className="indicator">
-                  <BsCart3 />
-                  <span className="badge badge-sm badge-secondary indicator-item">
-                    {cart?.length || 0}
-                  </span>
+                  <Link to="/dashboard/myCart">
+                    <BsCart3 />
+                    <span className="badge badge-sm badge-secondary indicator-item">
+                      {cart?.length || 0}
+                    </span>
+                  </Link>
                 </div>
               </div>
             </div>

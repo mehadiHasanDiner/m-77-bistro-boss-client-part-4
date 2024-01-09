@@ -1,4 +1,5 @@
-# TanStack Query
+# module-78
+# Admin panel
 
 [Link](https://tanstack.com/)
 

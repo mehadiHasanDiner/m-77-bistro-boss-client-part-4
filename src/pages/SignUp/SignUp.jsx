@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 const SignUp = () => {
   const { createUser, updateUserProfile } = useContext(AuthContext);
@@ -20,12 +21,29 @@ const SignUp = () => {
     createUser(data.email, data.password).then((result) => {
       const loggedInUser = result.user;
       console.log(loggedInUser);
+
       updateUserProfile(data.name, data.url)
         .then(() => {
-          console.log("user updated");
-          reset();
-          Swal.fire("User Logged in Successfully");
-          navigate("/");
+          const saveUser = {
+            name: data.name,
+            photoUrl: data.url,
+            email: data.email,
+          };
+          fetch("http://localhost:5000/users", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(saveUser),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.insertedId) {
+                reset();
+                Swal.fire("User Logged in Successfully");
+                navigate("/");
+              }
+            });
         })
         .catch((error) => console.log(error));
     });
@@ -147,6 +165,7 @@ const SignUp = () => {
                 </Link>
               </small>
             </p>
+            <SocialLogin></SocialLogin>
           </div>
         </div>
       </div>

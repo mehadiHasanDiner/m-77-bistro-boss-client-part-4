@@ -7,6 +7,7 @@ import { IoFastFoodOutline } from "react-icons/io5";
 import useCart from "../hooks/useCart";
 import { ImSpoonKnife } from "react-icons/im";
 import { AiOutlineBars } from "react-icons/ai";
+import { RiArchiveDrawerFill } from "react-icons/ri";
 
 const Dashboard = () => {
   const [cart] = useCart();
@@ -22,9 +23,9 @@ const Dashboard = () => {
         <Outlet></Outlet>
         <label
           htmlFor="my-drawer-2"
-          className="btn btn-primary drawer-button lg:hidden absolute left-0 top-0"
+          className="btn btn-neutral drawer-button lg:hidden absolute left-0 top-0 ml-2 mt-2"
         >
-          Open drawer
+          <RiArchiveDrawerFill /> Drawer
         </label>
       </div>
       <div className="drawer-side">
@@ -41,7 +42,7 @@ const Dashboard = () => {
               <li>
                 <NavLink to="/dashboard/myHome">
                   <FaHome />
-                  Amin Home
+                  Admin Home
                 </NavLink>
               </li>
               <li>

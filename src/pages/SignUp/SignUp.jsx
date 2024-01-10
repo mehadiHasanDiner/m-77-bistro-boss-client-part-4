@@ -26,7 +26,7 @@ const SignUp = () => {
         .then(() => {
           const saveUser = {
             name: data.name,
-            photoUrl: data.url,
+            photoURL: data.url,
             email: data.email,
           };
           fetch("http://localhost:5000/users", {

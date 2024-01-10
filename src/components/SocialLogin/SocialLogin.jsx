@@ -14,7 +14,7 @@ const SocialLogin = () => {
     googleSignIn().then((result) => {
       const loggedInUser = result.user;
       const saveUser = {
-        name: loggedInUser.name,
+        name: loggedInUser.displayName,
         photoURL: loggedInUser.photoURL,
         email: loggedInUser.email,
       };
@@ -26,10 +26,8 @@ const SocialLogin = () => {
         body: JSON.stringify(saveUser),
       })
         .then((res) => res.json())
-        .then((data) => {
-          if (data.insertedId) {
-            navigate(from, { replace: true });
-          }
+        .then(() => {
+          navigate(from, { replace: true });
         });
     });
   };

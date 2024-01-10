@@ -8,6 +8,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
@@ -112,7 +113,6 @@ const Login = () => {
                   name="captcha"
                   placeholder="Type the above captcha"
                   className="input input-bordered"
-                  
                 />
               </div>
               {/* TODO: make disabled to disabled for captcha */}
@@ -135,6 +135,7 @@ const Login = () => {
                 </Link>
               </small>
             </p>
+            <SocialLogin></SocialLogin>
           </div>
         </div>
       </div>

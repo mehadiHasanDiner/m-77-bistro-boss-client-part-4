@@ -8,12 +8,15 @@ import useCart from "../hooks/useCart";
 import { ImSpoonKnife } from "react-icons/im";
 import { AiOutlineBars } from "react-icons/ai";
 import { RiArchiveDrawerFill } from "react-icons/ri";
+import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
   const [cart] = useCart();
 
   // TODO: load data from the server to have dynamic isAdmin based on Data
-  const isAdmin = true;
+  // const isAdmin = true;
+
+  const [isAdmin] = useAdmin();
 
   return (
     <div className="drawer lg:drawer-open">

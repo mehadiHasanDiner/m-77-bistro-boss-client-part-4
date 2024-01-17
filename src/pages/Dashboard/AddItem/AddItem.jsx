@@ -1,15 +1,33 @@
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import { useForm } from "react-hook-form";
+const image_hosting_token = import.meta.env.VITE_Image_Upload_token;
 
 const AddItem = () => {
+  const image_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`;
+
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    const formData = new FormData();
+    formData.append("image", data.image[0]);
+    fetch(image_hosting_url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imageResponse) => {
+        if (imageResponse.success) {
+          const imgURL = imageResponse.data.display_url;
+          const { name, category, price, recipe } = data;
+          const newItem = { name, category, price:parseFloat(price), recipe, image: imgURL };
+          console.log(newItem);
+        }
+      });
+  };
 
   return (
     <div className="w-full px-4">
@@ -28,6 +46,9 @@ const AddItem = () => {
             className="input input-bordered w-full "
             {...register("name", { required: true, maxLength: 120 })}
           />
+          {errors.name && (
+            <span className="text-red-700">This field required</span>
+          )}
         </label>
 
         <div className="flex my-4">
@@ -44,6 +65,7 @@ const AddItem = () => {
               <option value="pizza">Pizza</option>
               <option value="soup">Soup</option>
               <option value="salad">Salad</option>
+              <option value="deshi">Deshi</option>
               <option value="drinks">Drinks</option>
               <option value="dessert">Dessert</option>
             </select>
@@ -67,7 +89,7 @@ const AddItem = () => {
             <span className="label-text"> Recipe Detail</span>
           </div>
           <textarea
-            {...register("price", { required: true })}
+            {...register("recipe", { required: true })}
             className="textarea textarea-bordered h-24"
             placeholder="Bio"
           ></textarea>

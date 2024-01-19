@@ -1,13 +1,17 @@
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 const image_hosting_token = import.meta.env.VITE_Image_Upload_token;
 
 const AddItem = () => {
+  const [axiosSecure] = useAxiosSecure();
   const image_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`;
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -23,8 +27,27 @@ const AddItem = () => {
         if (imageResponse.success) {
           const imgURL = imageResponse.data.display_url;
           const { name, category, price, recipe } = data;
-          const newItem = { name, category, price:parseFloat(price), recipe, image: imgURL };
+          const newItem = {
+            name,
+            category,
+            price: parseFloat(price),
+            recipe,
+            image: imgURL,
+          };
           console.log(newItem);
+          axiosSecure.post("/menu", newItem).then((data) => {
+            console.log("after posting new item", data);
+            if (data.data.insertedId) {
+              reset();
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Item added successfully",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
         }
       });
   };
